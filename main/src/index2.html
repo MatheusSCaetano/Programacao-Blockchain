@@ -9,7 +9,38 @@
 </head>
 <body>
     <button id="criar"> Criar um novo contrato </button>
+    <button id="buscar_nome"> Buscar Nome</button>
+    <button id="mudar_nome"> Mudar Nome</button>
+
     <script>
+
+      
+
+        async function buscaNome(){
+            const web3 = new Web3('HTTP://127.0.0.1:7545')
+
+            let transaction = {
+                to:'0x814178cbf7aa49ee0ecd39e840f0d00fc0a4bfac',
+                data:'0x2deb124b',
+            }
+            //e5e1bf8f -> ass mudaNome()
+            let receipt = await web3.eth.call(transaction);
+             console.log(receipt);
+
+        }
+
+        async function mudarNome(){
+            const web3 = new Web3('HTTP://127.0.0.1:7545')
+            let transaction={
+                
+                from:'0x1c6Fcda54976fe23B06119B057Cf443c0d987DF9',
+                to:'0x814178cbf7aa49ee0ecd39e840f0d00fc0a4bfac',
+                data:'0xe5e1bf8f000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000074d61746865757300000000000000000000000000000000000000000000000000',
+                gas:'0x4B705',
+            }
+            let receipt = await web3.eth.sendTransaction(transaction);
+             console.log(receipt);
+        }
 
         async function criar(){
             const web3 = new Web3('HTTP://127.0.0.1:7545')
@@ -20,14 +51,17 @@
                 gas:'0x4B705',
             }
 
-            let gas = await web3.eth.estimateGas(transaction);
-            console.log(gas);
+            //let gas = await web3.eth.estimateGas(transaction);
+            //console.log(gas);
 
              let receipt = await web3.eth.sendTransaction(transaction);
              console.log(receipt);
 
         }
         document.getElementById("criar").addEventListener('click',criar)
+        document.getElementById("buscar_nome").addEventListener('click', buscaNome)
+        document.getElementById("mudar_nome").addEventListener('click', mudarNome)
+
     </script>
 
 </body>
