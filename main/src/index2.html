@@ -12,7 +12,7 @@
     <button id="buscar_nome"> Buscar Nome</button>
     <button id="mudar_nome"> Mudar Nome</button>
     <button id="encode"> Encode</button>
-
+    <button id="mud" >Mud</button>
 
     <script>
 
@@ -21,7 +21,7 @@
         async function buscaNome(){
             const web3 = new Web3('HTTP://127.0.0.1:7545')
 
-            let endereco = '0xCb07D27788365B905930142b9A5d70231E4B2002';
+            let endereco = '0xa1c9306d0eCF0a2607e09c1600Ff320331991d6B';
             let abi = [ { "inputs": [], "name": "nome", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "string", "name": "_nome", "type": "string" } ], "name": "mudaNome", "outputs": [], "stateMutability": "nonpayable", "type": "function" } ]
 
             let contrato = new web3.eth.Contract(abi, endereco);
@@ -39,16 +39,29 @@
              console.log(receipt);*/
 
         }//fim buscaNome()
+//apagar
+        async function mud(){
+            const web3 = new Web3('HTTP://127.0.0.1:7545') 
+            let endereco = '0xa1c9306d0eCF0a2607e09c1600Ff320331991d6B';
+            let abi = [ { "inputs": [], "name": "nome", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function", "constant": true }, { "inputs": [ { "internalType": "string", "name": "_nome", "type": "string" } ], "name": "mudaNome", "outputs": [], "stateMutability": "nonpayable", "type": "function" } ]
+
+            let contrato = new web3.eth.Contract(abi,endereco);
+
+            let receipt = await contrato.methods.mudaNome("José").send({from:'0xB742F42ebd9DE09875c4c5B8734241Bc62b879Df'});
+            console.log(receipt);
+
+        }
+//apagar treinando
 
         //trazer o valor em hexadecimal
         async function encode(){
             const web3 = new Web3('HTTP://127.0.0.1:7545')
 
-            let endereco = '0xCb07D27788365B905930142b9A5d70231E4B2002';
+            let endereco = '0xa1c9306d0eCF0a2607e09c1600Ff320331991d6B';
             let abi = [ { "inputs": [], "name": "nome", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "string", "name": "_nome", "type": "string" } ], "name": "mudaNome", "outputs": [], "stateMutability": "nonpayable", "type": "function" } ]
 
             let contrato = new web3.eth.Contract(abi,endereco);
-            let encode = await contrato.methods.mudaNome('Carlos').encodeABI();
+            let encode = await contrato.methods.mudaNome('Julio Cesar Caetano').encodeABI();
             console.log(encode);
 
 
@@ -57,13 +70,13 @@
         async function mudarNome(){
             const web3 = new Web3('HTTP://127.0.0.1:7545')
 
-            let endereco = '0xCb07D27788365B905930142b9A5d70231E4B2002';
+            let endereco = '0xa1c9306d0eCF0a2607e09c1600Ff320331991d6B';
             let abi = [ { "inputs": [], "name": "nome", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "string", "name": "_nome", "type": "string" } ], "name": "mudaNome", "outputs": [], "stateMutability": "nonpayable", "type": "function" } ]
 
             let contrato = new web3.eth.Contract(abi,endereco);
 
             //Function mudaNome -> é a que está no Padrao.sol
-            let receipt = await contrato.methods.mudaNome('Julio Caetano').send({from:'0xC8d6F28A1d9403e8529bBA46DbB8A7841548FB4b'}); //inserir um endereco do ganache no send -> ele exige que seja definida uma addres em que será executada a funcao
+            let receipt = await contrato.methods.mudaNome('Mathues').send({from:'0xB742F42ebd9DE09875c4c5B8734241Bc62b879Df'}); //inserir um endereco do ganache no send -> ele exige que seja definida uma addres em que será executada a funcao
             console.log(receipt);
 
            /* let transaction={
@@ -98,7 +111,7 @@
         document.getElementById("buscar_nome").addEventListener('click', buscaNome)
         document.getElementById("mudar_nome").addEventListener('click', mudarNome)
         document.getElementById("encode").addEventListener('click',encode)
-
+        document.getElementById("mud").addEventListener('click',mud)
 
     </script>
 
