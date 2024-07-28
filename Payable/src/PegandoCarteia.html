@@ -10,6 +10,8 @@
     <button id="conectar">Conectar</button>
     <button id="recuperar">Recuperar Nome</button>
     <button id="alterar">Alterar Nome</button>
+    <button id="pegarRede">Pegar rede </button>
+
 
 
     <script>
@@ -20,11 +22,16 @@
 
         }
         async function run(){
-            const web3 = await new Web3(window.ethereum);
-            let contas = await web3.eth.getAccounts();
-            console.log(web3);
-            console.log("Contas: ", contas);
+            alert(' page reload')
+            if (window.ethereum){ //Vericando se o meta mask esta installado
+            //     const web3 = await new Web3(window.ethereum);
+            // let contas = await web3.eth.getAccounts(); //Utilizando web3 para dar um eth.getAccounts
+            // console.log(web3);
+            let contas = await ethereum.request({method: 'eth_accounts'}) // utilizando o objeto eethereum para dar um get nas contas => ethereum.request(method:'eth_accounts')
+             console.log("Contas: ", contas);
 
+            }else{alert("Metamask is not installed")}
+            
         }
         var abi = [ { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "inputs": [], "name": "nome", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function", "constant": true }, { "inputs": [ { "internalType": "string", "name": "_novoNome", "type": "string" } ], "name": "mudaNome", "outputs": [], "stateMutability": "nonpayable", "type": "function" } ];
         var endereco = '0xa49E119d4756015FaF55BC46e56b4bC508BDeDbC';
@@ -38,8 +45,14 @@
         async function pegarConta(){
             let contas = await web3.eth.getAccounts();
             conta = contas[0];
-            console.log(conta)
+            console.log(conta);
             
+        } 
+
+        async function pegarRede(){
+            const web = await new Web3(window.ethereum);
+            let rede = await ethereum.request({method:'eth_chainId'})
+            console.log(rede);
         }
 
         async function alterar(){
@@ -54,10 +67,13 @@
             console.log(receipt);
 
         }
-
         document.getElementById("conectar").addEventListener('click',conectar);
         document.getElementById("recuperar").addEventListener('click',recuperar);
         document.getElementById("alterar").addEventListener('click',alterar);
+        document.getElementById("pegarRede").addEventListener('click',pegarRede);
+        ethereum.on('chainChanged', () => {window.location.reload()}); //da um reload na pagina sepre que a rede do metamask for alterada.
+        ethereum.on('accountsChanged', () => {alert('Outher open account')}); // MOSSTRA QUANDO TROCA A ACCOUNT
+
 
 
         
