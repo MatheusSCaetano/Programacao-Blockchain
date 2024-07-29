@@ -17,16 +17,14 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
       "name": "recebeDinheiro",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function",
-      "payable": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.7+commit.e28d00a7\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"enderecoAnterior\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"recebeDinheiro\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Payable.sol\":\"ContratoPayable\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Payable.sol\":{\"keccak256\":\"0x0df7658b568d2688754378166edac5e31b80d42c5843475a745f05b8a9ebf6b1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://35d43934f0710a0c0f27440db25ac352d82c93e7b5bca8edddeacd506733e3bc\",\"dweb:/ipfs/QmQmQd1NXtVgg7CD7i9vTHegXuREXTzFMQBeDdMLvPkrAL\"]}},\"version\":1}",
@@ -731,8 +729,7 @@
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-07-25T02:39:26.033Z",
-  "networkType": "ethereum",
+  "updatedAt": "2024-07-28T13:46:13.672Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

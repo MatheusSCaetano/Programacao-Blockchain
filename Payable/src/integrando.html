@@ -17,15 +17,18 @@
 </head>
 
 <body>
+    <!-- <div id="pegarRede">
+        <button id="pegarRede"</button>
+    </div> -->
     <div id="conectar">
         <button id="btnConectar" style="display: none;"> Conectar ao MetaMask </button>
     </div>
-    
+
     <div>
         Nome: <input id="inputNome" type="text" />
     </div>
     <div>
-        <button id="alterar">Alterar Nome</button>
+        <button id="alterar" style="display: none;">Alterar Nome</button>
     </div>
     <div id="nome">&nbsp;</div>
 
@@ -33,25 +36,67 @@
 
 
         var provider = window.ethereum;
+        var endereco = '0xa49E119d4756015FaF55BC46e56b4bC508BDeDbC';
+        var abi = [{ "inputs": [], "name": "nome", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_novoNome", "type": "string" }], "name": "mudaNome", "outputs": [], "stateMutability": "nonpayable", "type": "function" }]
+        var conta = "";
 
         async function run() {
-            if (!provider) {
+            if (!provider) {//não provider
                 document.getElementById('conectar').innerHTML = "Por favor instale o MetaMask";
-            }else {
-                let contas = await provider.request({ method: 'eth_accounts' });
-                if(contas.length == 0){
+            } else {
+                let contas = await provider.request({ method: 'eth_accounts' });//request na conta
+                if (contas.length == 0) { // If não houver nenhuma conta conectada:
                     document.getElementById("btnConectar").style.display = 'block';
-                    document.getElementById("btnConectar").addEventListener('click', conectarMM)
-                }
-                
+                    document.getElementById("btnConectar").addEventListener('click', conectarMM,)
+
+                } else {
+                    document.getElementById('conectar').innerHTML = ("Conta conectada: " + contas[0]); //tirar o botao e colocar o inner html no lugar;
+                    conta = contas[0];
+                    document.getElementById('alterar').style.display = 'block'; //botao alterar Nome aparecera quando houver uma conexao
+                    pegarNome();
+                } // Se a conta já estiver conectada, mostrará a conta
+
             }
         }
-        async function conectarMM(){
+
+        async function conectarMM() {
             // const web3 = await new Web3(provider);
-            let contas = await provider.request({method: 'eth_requestAccounts'});
-            document.getElementById('btnConectar')
+            let contas = await provider.request({ method: 'eth_requestAccounts' }); //método request accounts => OBJ ETHEREUM
+            // document.getElementById('btnConectar').innerHTML(contas[0]);
+            window.location.reload();
+
         }
-        
+
+
+        async function pegarNome() { //jogaremos diretamente no run() para que quando pegar a conta já ser informado o nome instanciado;
+            const web3 = await new Web3(provider);
+            let contrato = await new web3.eth.Contract(abi, endereco);
+            let nome = await contrato.methods.nome().call();
+            document.getElementById("nome").innerHTML = nome;
+            console.log(nome);
+        }
+
+
+
+        async function alterarNome() {
+            const web3 = await new Web3(provider);
+
+            let contrato = await new web3.eth.Contract(abi, endereco);
+            let novoNome = document.getElementById('inputNome').value; //variavel novo nome recebe value do input
+            let receipt = await contrato.methods.mudaNome(novoNome).send({ from: conta }); //var conta = contas[0] que é a conta atual;
+            window.location.reload(); //reload na pagina atual            
+        }
+
+
+        // async function pegarRede(){
+        //     const web = await new Web3(provider);
+        //     let rede = await ethereum.request({method:'eth_chainId'})
+        //     console.log(rede);
+        // }
+        //document.getElementById("pegarRede").addEventListener('click',pegarRede);
+        ethereum.on('accountsChanged', () => { alert('Outher open account') }); // MOSSTRA QUANDO TROCA A ACCOUNT
+        ethereum.on('chainChanged', () => { window.location.reload() }); //da um reload na pagina sepre que a rede do metamask for alterada.
+        document.getElementById('alterar').addEventListener('click', alterarNome);
         run();
     </script>
 
