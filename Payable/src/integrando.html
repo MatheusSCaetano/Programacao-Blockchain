@@ -36,7 +36,7 @@
 
 
         var provider = window.ethereum;
-        var endereco = '0xa49E119d4756015FaF55BC46e56b4bC508BDeDbC';
+        var endereco = '0x41f7F48B5f19b89E10F4b674e8c021449040329f';
         var abi = [{ "inputs": [], "name": "nome", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_novoNome", "type": "string" }], "name": "mudaNome", "outputs": [], "stateMutability": "nonpayable", "type": "function" }]
         var conta = "";
 
@@ -52,8 +52,17 @@
                 } else {
                     document.getElementById('conectar').innerHTML = ("Conta conectada: " + contas[0]); //tirar o botao e colocar o inner html no lugar;
                     conta = contas[0];
-                    document.getElementById('alterar').style.display = 'block'; //botao alterar Nome aparecera quando houver uma conexao
-                    pegarNome();
+
+                    //liberar button alterar nome:
+                    let chainId = await provider.request({ method: 'eth_chainId' });
+                    if (chainId != '0x61') {
+                        alert('Please! Connect to the correct network');
+                    } else {
+                        document.getElementById('alterar').style.display = 'block'; //botao alterar Nome aparecera quando houver uma conexao
+                        pegarNome();
+                    }
+
+
                 } // Se a conta já estiver conectada, mostrará a conta
 
             }
@@ -74,6 +83,8 @@
             let nome = await contrato.methods.nome().call();
             document.getElementById("nome").innerHTML = nome;
             console.log(nome);
+
+
         }
 
 
